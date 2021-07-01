@@ -87,10 +87,8 @@ const App = () => {
       if (storedResult !== "") {
         setFirstNumber(storedResult)
         setStoredResult("")
-        setSelectedFunction(clickedFunction)
-      } else {
-        setSelectedFunction(clickedFunction)
       }
+      setSelectedFunction(clickedFunction)
       console.log(`${clickedFunction} was selected.`)
     }
   }
@@ -153,6 +151,8 @@ const App = () => {
       } else if (secondNumber.length === 1) {
         setSecondNumber("")
         setDisplay("0")
+      } else if (secondNumber.length === 0) {
+        setSelectedFunction("")
       }
     }
   }
