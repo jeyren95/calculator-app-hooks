@@ -1,0 +1,13 @@
+.large-button {
+  text-align: center;
+  width: 48%;
+  margin: auto;
+  margin-bottom: 5%;
+  border-radius: 10px;
+  padding: 3.75% 0;
+}
+
+.large-button span {
+  font-size: 17px;
+  font-weight: 700;
+}

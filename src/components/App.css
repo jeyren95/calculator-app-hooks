@@ -1,0 +1,9 @@
+body {
+  font-family: 'Spartan', sans-serif;
+  background-color: hsl(222, 26%, 31%)
+}
+
+.calculator {
+  width: 22%;
+  margin: 5% auto 0;
+}
