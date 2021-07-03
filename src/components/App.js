@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import SmallButton from "./SmallButton";
 import LargeButton from "./LargeButton";
 import Display from "./Display";
-
+import Header from "./Header";
 
 import "./App.css";
 
@@ -16,6 +16,7 @@ const App = () => {
   const [secondNumber, setSecondNumber] = useState("")
   const [display, setDisplay] = useState("0")
   const [storedResult, setStoredResult] = useState("")
+  const [selectedTheme, setSelectedTheme] = useState("1")
 
   const renderSmallButtons = () => {
     return smallButtons.map((button) => {
@@ -27,9 +28,7 @@ const App = () => {
         inputSelectedNumber={inputSelectedNumber}
         handlePointClick={handlePointClick}
         handleDeleteClick={handleDeleteClick}
-        firstNumber={firstNumber}
-        secondNumber={secondNumber}
-        selectedFunction={selectedFunction}
+        selectedTheme={selectedTheme}
         />
       )
     })
@@ -43,6 +42,7 @@ const App = () => {
         name={button}
         handleEqualsClick={handleEqualsClick}
         handleResetClick={handleResetClick}
+        selectedTheme={selectedTheme}
         />
       )
     })
@@ -61,35 +61,52 @@ const App = () => {
       if (storedResult !== "") {
         setStoredResult("")
       }
-      let concatenatedNumber = firstNumber + number
-      setFirstNumber(concatenatedNumber)
-      setDisplay(concatenatedNumber)
-      console.log(`First number: ${concatenatedNumber}`)
+
+      if (firstNumber.length < 10) {
+        let concatenatedNumber = firstNumber + number
+        setFirstNumber(concatenatedNumber)
+        setDisplay(concatenatedNumber)
+        console.log(`First number: ${concatenatedNumber}`)
+      }
     } else {
-      let concatenatedNumber = secondNumber + number
-      setSecondNumber(concatenatedNumber)
-      setDisplay(concatenatedNumber)
-      console.log(`Second number: ${concatenatedNumber}`)
+      if (secondNumber.length < 10) {
+        let concatenatedNumber = secondNumber + number
+        setSecondNumber(concatenatedNumber)
+        setDisplay(concatenatedNumber)
+        console.log(`Second number: ${concatenatedNumber}`)
+      }
     }
   }
 
-
   //When the user clicks a math function
-  //Only call the function if the user hasn't already clicked a math function
   //First scenario - if user intends to continue the calculation using the stored result
-    //Set the stored result to the first number
-    //Reset the stored result
-    //Set the selected function to the clicked function
-  //Second scenario - if there is no stored result yet
-    //Set the selected function to the clicked function
+    //If the user has not selected a math function yet, set the selected function as the clicked function
+    //This prevents the math function from changing if the user accidentally clicks a diff math function after already selecting a math function
+  //Second scenario - if this is a fresh calculation, meaning there is no stored result yet
+    //If no function has been selected yet and the first number has already been entered, then set the math function to the clicked function
+
+    //If no funciton has been selected yet, and the first number has not been entered, and the clicked function is a minus sign
+    //Then set the first number to be negative
+
+    //If a function has already been selected, and the second number has not been entered, and the clicked function is a minus sign
+    //Then set the second number to be negative
   const selectFunction = (clickedFunction) => {
-    if (selectedFunction === "") {
-      if (storedResult !== "") {
+    if (storedResult !== "") {
+      if (selectedFunction === "") {
+        setSelectedFunction(clickedFunction)
         setFirstNumber(storedResult)
         setStoredResult("")
       }
-      setSelectedFunction(clickedFunction)
-      console.log(`${clickedFunction} was selected.`)
+    } else {
+      if (selectedFunction === "" && firstNumber !== "") {
+        setSelectedFunction(clickedFunction)
+      } else if (selectedFunction === "" && firstNumber === "" && clickedFunction === "-") {
+        setFirstNumber("-")
+        setDisplay("-")
+      } else if (selectedFunction !== "" && secondNumber === "" && clickedFunction === "-") {
+        setSecondNumber("-")
+        setDisplay("-")
+      }
     }
   }
 
@@ -166,18 +183,22 @@ const App = () => {
     if (firstNumber !== "" && secondNumber !== "") {
       if (selectedFunction === "+") {
         let calculatedResult = (parseFloat(firstNumber) + parseFloat(secondNumber)).toString()
+        calculatedResult = calculatedResult.slice(0, 10)
         setStoredResult(calculatedResult)
         setDisplay(calculatedResult)
       } else if (selectedFunction === "x") {
         let calculatedResult = (parseFloat(firstNumber) * parseFloat(secondNumber)).toString()
+        calculatedResult = calculatedResult.slice(0, 10)
         setStoredResult(calculatedResult)
         setDisplay(calculatedResult)
       } else if (selectedFunction === "/") {
         let calculatedResult = (parseFloat(firstNumber) / parseFloat(secondNumber)).toString()
+        calculatedResult = calculatedResult.slice(0, 10)
         setStoredResult(calculatedResult)
         setDisplay(calculatedResult)
       } else if (selectedFunction === "-") {
         let calculatedResult = (parseFloat(firstNumber) - parseFloat(secondNumber)).toString()
+        calculatedResult = calculatedResult.slice(0, 10)
         setStoredResult(calculatedResult)
         setDisplay(calculatedResult)
       }
@@ -196,12 +217,40 @@ const App = () => {
     setStoredResult("")
   }
 
+  //When the user clicks the theme toggle button, change the seleceted theme accordingly
+  const selectTheme = () => {
+    if (selectedTheme === "1") {
+      setSelectedTheme("2")
+    } else if (selectedTheme === "2") {
+      setSelectedTheme("3")
+    } else if (selectedTheme === "3") {
+      setSelectedTheme("1")
+    }
+  }
+
+  const renderKeypadBackgroundColor = () => {
+    if (selectedTheme === "1") {
+      return "hsl(223, 31%, 20%)"
+    } else if (selectedTheme === "2") {
+      return "hsl(0, 5%, 81%)"
+    } else {
+      return "hsl(268, 71%, 12%)"
+    }
+  }
+
+
+
   return (
     <div className="calculator">
+      <Header
+      selectedTheme={selectedTheme}
+      selectTheme={selectTheme}
+      />
       <Display
       display={display}
+      selectedTheme={selectedTheme}
       />
-      <div className="keypad">
+      <div className="keypad" style={{backgroundColor: renderKeypadBackgroundColor()}}>
         <div className="row">
           {renderSmallButtons()}
         </div>

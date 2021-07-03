@@ -1,0 +1,87 @@
+.header {
+  margin-bottom: 3%;
+}
+
+.header h2, .header span {
+  font-weight: 700;
+}
+
+.header h2 {
+  margin-top: 3%;
+}
+
+.theme-switcher span {
+  font-size: 12px;
+}
+
+.theme-choices {
+  text-align: right;
+}
+
+.theme-choices span {
+  letter-spacing: 6.8px;
+}
+
+.theme-label {
+  position: relative;
+  left: 25%;
+}
+
+.theme-toggle-button {
+  width: 32%;
+  margin-left: 29%;
+  border-radius: 15px;
+}
+
+.fa-circle {
+  position: relative;
+  top: 0.5px;
+}
+
+@media (max-width: 320px) {
+  .theme-label {
+    left: 0
+  }
+  .theme-toggle-button {
+    margin-left: 14%;
+    width: 45%;
+  }
+}
+
+
+@media (min-width: 321px) and (max-width: 360px) {
+  .theme-toggle-button {
+    width: 41%;
+    margin-left: 18.5%;
+  }
+  .theme-label {
+    left: 7%;
+  }
+
+}
+
+@media (min-width: 361px) and (max-width: 375px) {
+  .theme-toggle-button {
+    margin-left: 20%;
+    width: 40%;
+  }
+  .fa-circle {
+    top: 0.8px;
+  }
+  .theme-label {
+    left: 10%;
+  }
+}
+
+@media (min-width: 376px) and (max-width: 480px) {
+  .theme-toggle-button {
+    width: 36.5%;
+    margin-left: 24%;
+  }
+  .fa-circle {
+    top: 0.9px;
+  }
+  .theme-label {
+    left: 13%;
+  }
+}

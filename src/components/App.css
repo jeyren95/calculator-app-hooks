@@ -7,3 +7,38 @@ body {
   width: 22%;
   margin: 5% auto 0;
 }
+
+.keypad {
+  padding: 7% 8%;
+  border-radius: 10px;
+}
+
+@media (max-width: 480px) {
+  .calculator {
+    width: 90%;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .calculator {
+    width: 60%;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) and (orientation: landscape) {
+  .calculator {
+    width: 50%
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .calculator {
+    width: 37%;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .calculator {
+    width: 30%;
+  }
+}
